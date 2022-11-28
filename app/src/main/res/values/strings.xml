@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">online banking app ui Demo</string>
+    <string name="activitiesText">Activities</string>
+    <string name="btnActivitiesText">This week</string>
 </resources>
