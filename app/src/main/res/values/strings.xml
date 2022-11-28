@@ -2,4 +2,6 @@
     <string name="app_name">online banking app ui Demo</string>
     <string name="activitiesText">Activities</string>
     <string name="btnActivitiesText">This week</string>
+    <string name="user_name_text">Ali Dinarvand</string>
+    <string name="perfetional_user">UX UI Designer</string>
 </resources>

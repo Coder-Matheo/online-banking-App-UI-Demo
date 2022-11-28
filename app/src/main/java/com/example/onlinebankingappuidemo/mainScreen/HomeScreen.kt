@@ -6,10 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,11 +21,75 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.onlinebankingappuidemo.AppBar
-import com.example.onlinebankingappuidemo.Chart
+import com.example.onlinebankingappuidemo.*
 import com.example.onlinebankingappuidemo.R
-import com.example.onlinebankingappuidemo.transactionInfo
+import kotlinx.coroutines.launch
 
+
+@Composable
+fun CallDrawer() {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            AppBar(
+                onNavigationIconClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+            )
+        },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen
+        ,
+        drawerContent = {
+            DrawerHeader(scaffoldState)
+            DrawerBody(
+                items = listOf(
+                    MenuItemDrawer(
+                        id = "Corporate App",
+                        title = "Corporate",
+                        conentDescription = "Go to Corporate screen",
+                        icon = Icons.Default.Place
+                    ),MenuItemDrawer(
+                        id = "Security Settings",
+                        title = "Settings",
+                        conentDescription = "Go to settings screen",
+                        icon = Icons.Default.Settings
+                    ),MenuItemDrawer(
+                        id = "Online Shopping",
+                        title = "online shopping",
+                        conentDescription = "Go to shopping screen",
+                        icon = Icons.Default.ShoppingCart
+                    ),MenuItemDrawer(
+                        id = "Groceries",
+                        title = "Groceries",
+                        conentDescription = "Go to Groceries screen",
+                        icon = Icons.Default.MoreVert
+                    ),MenuItemDrawer(
+                        id = "Utilities",
+                        title = "Utilities",
+                        conentDescription = "Go to Utilities screen",
+                        icon = Icons.Default.Info
+                    ),MenuItemDrawer(
+                        id = "Thumb Scanner",
+                        title = "Thumb Scanner",
+                        conentDescription = "Go to Thumb Scanner screen",
+                        icon = Icons.Default.ThumbUp
+                    )
+                ),
+
+                onItemClick = {
+                    println("Clicked on ${it.title}")
+                }
+            )
+        }
+    ) {
+        HomeScreen()
+    }
+}
 
 @Composable
 fun HomeScreen() {
@@ -35,10 +100,11 @@ fun HomeScreen() {
             .background(Color.Black)
 
     ) {
-        AppBar()
+
         TextAndBoxBalance()
         LazyRowTransaction()
         TextActivities()
+
         Chart(
             data = mapOf(
                 Pair(0.5f, "Jun"),
@@ -53,8 +119,6 @@ fun HomeScreen() {
         )
     }
 }
-
-
 
 
 @Composable
@@ -189,7 +253,7 @@ fun MyLazyRowTransaction(transName: String, transIcon: Int) {
 @Composable
 fun TextActivities() {
 
-    Row(modifier = Modifier.padding(12.dp)) {
+    Row(modifier = Modifier.padding(start = 20.dp)) {
         Text(
             text = stringResource(id = R.string.activitiesText),
             fontSize = 20.sp,
@@ -197,18 +261,12 @@ fun TextActivities() {
         )
         Button(
             onClick = { /*TODO*/ }, modifier = Modifier
-                .offset(190.dp, 0.dp)
+                .offset(170.dp, 0.dp)
+                .padding(end = 40.dp)
         ) {
             Text(text = stringResource(id = R.string.btnActivitiesText))
         }
     }
 
 
-}
-
-
-@Composable
-@Preview
-fun HomeScreenPreview() {
-    LazyRowTransaction()
 }
